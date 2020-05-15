@@ -1,4 +1,6 @@
 """ A 2D drone simulator for testing autonomous flight """
+import math 
+import random.random
 
 class DroneState(object):
     def __init__(self):
@@ -15,17 +17,62 @@ class DroneState(object):
         self.drone_state = [self.x, self.y, self.x_dot, self.y_dot]    
         self.done = False 
         self.is_reset = False 
+        # constants
+        self.Q = dict() # The action value function results / table 
+        self.epsilon_constant = 1.0
+
+    # def set_drone_state(self, state):
+    #     self.drone_state = [state[0], state[1], state[2], state[3]]
+
+    def build_state(self, state):
+        # Returns the current state as a string value based on the input arg state: x_y
+        state = str(int(round(state[0])))+'_'+str(int(round(state[1])))
+
+        return state
+
+    def get_maxQ(self, state):
+        max_Q = -10000000 
+        
+        for action in self.Q[state]:
+            if self.Q[state][action] > max_Q:
+                max_Q = self.Q[state][action]
+
+        return max_Q
     
-    def set_drone_state(self, state):
-        self.drone_state = [state[0], state[1], state[2], state[3]]
+    def create_Q(self, state):
+        """
+        Creates the action value function and sets the current state to 0,0
+        """
+        if state is not self.Q.keys():
+            self.Q[state] = self.Q.get(state, {'0':0.0, '1':0.0, '2':0.0, '3':0.0})
 
-    def reset(self):
-        pass
-
-    def step(self):
-        pass
-
+        return
     
+    def choose_action(self, state):
+        valid_actions = ['0','1','2','3']
+        """ Choice function that implements a greedy algorithm 
+        """
+        if random.random() < self.epsilon_constant:
+            action = random.choice(valid_actions)
+            print('Random: ', action)
+        else:
+            action = []
+            max_Q = self.get_maxQ(state)
+            for action in self.Q[state]:
+                if self.Q[state][action] == float(max_Q):
+                    action.append(action)
+            action = random.choice(action)
+            print('Greddy: ', action)
+
+        return action
+    
+    def learn(self, state, action, reward, next_state):
+        maxQ_next_state = drone.get_maxQ(next_state)
+        # self.Q[state][action] = self.Q[state][action] + self.alpha*(reward - self.Q[state][action])
+        self.Q[state][action] = (1 - self.alpha)*self.Q[state][action] + self.alpha*(self.gamma*(reward + maxQ_next_state))
+
+
+
 drone = DroneState()
 
 def get_reward(state):
@@ -55,3 +102,4 @@ def take_off():
     pass
 
 def main():
+    pass 
