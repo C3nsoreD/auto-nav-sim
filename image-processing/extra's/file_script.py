@@ -14,7 +14,7 @@ DRYRUN=False
 
 for (index,filename) in enumerate(files):
   extension = os.path.splitext(filename)[1]
-  newname = "image-%05d%s" % (index, extension)
+  newname = "%d%s" % (index, extension)
   if os.path.exists(newname):
     print("Cannot rename %s to %s, already exists" % (filename,newname))
     continue
