@@ -121,6 +121,9 @@ def test_funt(image):
 if __name__ == "__main__":
     template = canny_template(cv.imread("13.jpg"))
     print(template.shape[:2])
+    """
+    Trying to reduce image shine to reduce errors 
+    """
     # image = cv.imread("images/2.jpg")
     # resized = image_resize(image)
     # test_funt(resized)
