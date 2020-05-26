@@ -55,8 +55,8 @@ def contains_template(template_image, visualize=False, image_path="images"):
         # (endX, endY) = (int((maxLoc[0] + tW) * resized), int((maxLoc[1] + tH) * resized))
         """draw a bounding box around the detected result and display the image """
         # cv.rectangle(image, top_left, bottom_right, (0,0,255), 20)
-        cv.rectangle(image, (startX, startY), (endX, endY), (0, 0, 255), 2)
-        cv.imshow("Image", image)
+        cv.rectangle(_gray, (startX, startY), (endX, endY), (0, 0, 255), 2)
+        cv.imshow("Image", _gray)
         cv.waitKey(0)
 
 def image_resize(img, scale_percent=50):
@@ -121,7 +121,7 @@ def test_funt(image):
 if __name__ == "__main__":
     template = canny_template(cv.imread("13.jpg"))
     print(template.shape[:2])
-    image = cv.imread("images/2.jpg")
-    resized = image_resize(image)
-    test_funt(resized)
-    # contains_template(template, visualize=True)
+    # image = cv.imread("images/2.jpg")
+    # resized = image_resize(image)
+    # test_funt(resized)
+    contains_template(template, visualize=True)
