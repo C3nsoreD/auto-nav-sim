@@ -7,20 +7,27 @@ import glob
 import matplotlib.pyplot as plt 
 
 def contains_template(template_image, visualize=False, image_path="images"):
-    # 
+    """
+    Finds the location of the template in a given image.
+    Arguments: template image, image path
+    Returns an image with the location marked in a rectangle.
+    """
     found = None
     (tH, tW) = template_image.shape[:2]
 
     for imagePath in glob.glob(image_path + "/*.jpg"):
-        img = cv.imread(imagePath)
+        img = cv.imread(imagePath) # Read the image file 
         
-        _gray = cv.cvtColor(image_resize(img, scale_percent=30), cv.COLOR_BGR2GRAY)
+        _gray = cv.cvtColor(_resize(img, scale_percent=30), cv.COLOR_BGR2GRAY) 
     
         for scale in np.linspace(0.2, 1.0, 30)[::-1]:
-
+            # this loop scales the image by 30% while searching for the image template 
             resized = imutils.resize(_gray, width=int(_gray.shape[1] * scale))
+
             r = _gray.shape[1]/float(resized.shape[1])
 
+            # Break the loop when the image is smaller than the template.
+            # this will prevent and error on cv.matchTemplate
             if resized.shape[0] < tH or resized.shape[1] < tW:
                 break 
             
@@ -33,7 +40,7 @@ def contains_template(template_image, visualize=False, image_path="images"):
             # (min_val, maxVal, min_loc, maxLoc) = cv.minMaxLoc(result)
             
             # top_left = min_loc
-            # bottom_right = (top_left[0] + w, top_left[1] + h)
+            # bottom_right = (top_left[0] + tW, top_left[1] + tH)
 
             """ check to see if the iteration should be visualized"""
             if visualize:
@@ -59,14 +66,17 @@ def contains_template(template_image, visualize=False, image_path="images"):
         cv.imshow("Image", _gray)
         cv.waitKey(0)
 
-def image_resize(img, scale_percent=50):
-        width = int(img.shape[1] * scale_percent / 100)
-        height = int(img.shape[0] * scale_percent / 100)
-        dim = (width, height)
-        """ resize image"""
-        image = cv.resize(img, dim, interpolation = cv.INTER_AREA)
-        
-        return image
+def _resize(img, scale_percent=50):
+    """
+    Takes an image and resizes, default it reduces to 50% 
+    """
+    width = int(img.shape[1] * scale_percent / 100)
+    height = int(img.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    """ resize image"""
+    image = cv.resize(img, dim, interpolation = cv.INTER_AREA)
+    
+    return image
 
         
 def canny_template(image):
@@ -90,8 +100,10 @@ def filtered(gray_image):
     thresh = cv.erode(thresh, None, iterations=2)
     thresh = cv.dilate(thresh, None, iterations=4)
 
-def test_funt(image):
-
+def function1(image):
+    """
+    Attempting to reduce noise(image shine from)
+    """
     # image = image_resize(img)
     new_image = np.zeros(image.shape, image.dtype)
     
