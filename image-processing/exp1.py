@@ -43,6 +43,7 @@ def contains_template(template_image, visualize=False, image_path="images"):
             # bottom_right = (top_left[0] + tW, top_left[1] + tH)
 
             """ check to see if the iteration should be visualized"""
+            
             if visualize:
                 """ draw a bounding box around the detected region """
                 clone = np.dstack([edged, edged, edged])
@@ -77,8 +78,7 @@ def _resize(img, scale_percent=50):
     image = cv.resize(img, dim, interpolation = cv.INTER_AREA)
     
     return image
-
-        
+      
 def canny_template(image):
     #converts image to gray 
     img = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
@@ -138,5 +138,5 @@ if __name__ == "__main__":
     """
     # image = cv.imread("images/2.jpg")
     # resized = image_resize(image)
-    # test_funt(resized)
+    # function1(resized)
     contains_template(template, visualize=True)
