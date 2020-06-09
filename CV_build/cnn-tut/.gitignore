@@ -1,0 +1,7 @@
+*.pickle
+data/
+images/
+3nv/
+__pycache__/
+.idea/
+CNN.model/
