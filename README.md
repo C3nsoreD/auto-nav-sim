@@ -1,5 +1,5 @@
-# Navigation simulator based on RL model
-Navigation simulator using Reinforcement learning. based on the work of "Autonomous UAV Navigation Using Reinforcement Learning" and "Human-level control through deep reinforcement learning" 
+# Navigation simulator based on Ml models
+Navigation simulator using Reinforcement & Machine learning algorithms. Based on the work of "Autonomous UAV Navigation Using Reinforcement Learning" and "Human-level control through deep reinforcement learning" 
 
 ## Image processing for UAV navigation
 
